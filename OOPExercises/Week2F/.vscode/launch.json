@@ -1,0 +1,84 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-EvalBool<Week2F>",
+            "request": "launch",
+            "mainClass": "EvalBool",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-FacePrinter<Week2F>",
+            "request": "launch",
+            "mainClass": "FacePrinter",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-FixedDivider<Week2F>",
+            "request": "launch",
+            "mainClass": "FixedDivider",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-IntegerDistance<Week2F>",
+            "request": "launch",
+            "mainClass": "IntegerDistance",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-LargestDouble<Week2F>",
+            "request": "launch",
+            "mainClass": "LargestDouble",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-PolarCoordinates<Week2F>",
+            "request": "launch",
+            "mainClass": "PolarCoordinates",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-QuadraticSolver<Week2F>",
+            "request": "launch",
+            "mainClass": "QuadraticSolver",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SaferQuadraticSolver<Week2F>",
+            "request": "launch",
+            "mainClass": "SaferQuadraticSolver",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SquareLoops<Week2F>",
+            "request": "launch",
+            "mainClass": "SquareLoops",
+            "projectName": "Week2F"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-SquareLoopsRange<Week2F>",
+            "request": "launch",
+            "mainClass": "SquareLoopsRange",
+            "projectName": "Week2F"
+        }
+    ]
+}
