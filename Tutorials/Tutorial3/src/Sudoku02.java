@@ -3,6 +3,17 @@ import java.util.InputMismatchException;
 import java.util.Objects;
 
 public class Sudoku02 {
+	// set the value for the sudoku grid from the arguments given when running the program.
+	public static int[][] parseArgs(String[] args) {
+		int[][] grid = new int[9][9];
+		for (int i = 0; i < 9; i++) {
+			int count = 9;
+			for (int j = 0; j < 9; j++) {
+				grid[i][j] = Integer.parseInt(args[i*count + j]);
+			}
+		}
+		return grid;
+	}
 
 	/**
 	 * Print a game menu message to the console.
@@ -57,23 +68,6 @@ public class Sudoku02 {
 
 	public static void printGrid(int[][] mat) {
 		System.out.println("");
-//    	for (int i=0; i < 9; i++) {
-//        	for (int j = 0;  j< 9; j++) {// print the grid here
-//        		if ((j+1) % 3 == 0) { //space after every 3 columns
-//        			System.out.print(mat[i][j] + "  ");	
-//        		}
-//        		else {
-//        			System.out.print(mat[i][j] + " ");
-//        		}
-//        	}
-//        	if ((i+1) % 3 == 0) { //2 new lines after every 3 rows
-//        		System.out.print("\n\n");
-//        	}
-//        	else  {
-//        		System.out.print("\n");
-//        	}
-//        }
-
 		for (int i = 0; i < 9; ++i) {
 			if (i == 0)
 				System.out.println("    0 1 2   3 4 5   6 7 8");
@@ -98,28 +92,33 @@ public class Sudoku02 {
 		int value = requestInt("Enter the value you wish to assign", 0, 9);
 		if (isValid(row, column, value, mat)) {
 			mat[row][column] = value;
-		} else
-			System.err.println("Value not allowed");
+		} else {
+			System.err.println("\nValue not allowed");
+		}
 	}
 
 	public static void clearField(int[][] mat) {
-		int row = requestInt("Row number of field to clear", 0, 9);
-		int column = requestInt("Column number of field to clear", 0, 9);
+		int row = requestInt("Row number of field to clear", 0, 8);
+		int column = requestInt("Column number of field to clear", 0, 8);
 		mat[row][column] = 0;
 	}
 
 	public static boolean checkRow(int x, int y, int value, int[][] mat) {
 		for (int j = 0; j < 9; j++) {
-			if (value == mat[x][j])
+			if (value == mat[x][j]) {////printing out the index of the value which is against the rules.
+				System.out.println("\nThere is a " + value + " at position " + "(" + x + ", " + j + ")");
 				return false;
+			}
 		}
 		return true;
 	}
 
 	public static boolean checkColumn(int x, int y, int value, int[][] mat) {
 		for (int i = 0; i < 9; i++) {
-			if (value == mat[i][y])
+			if (value == mat[i][y]) {////printing out the index of the value which is against the rules.
+				System.out.println("\nThere is a " + value + " at position " + "(" + i + ", " + y + ")");
 				return false;
+			}
 		}
 		return true;
 	}
@@ -129,8 +128,10 @@ public class Sudoku02 {
 		int subGridNumber = x / 3;
 		for (int i = subGridNumber * 3; i < (subGridNumber * 3 + 3); i++) {
 			for (int j = subGridNumber * 3; j < (subGridNumber * 3 + 3); j++) {
-				if (value == mat[i][j])
+				if (value == mat[i][j]) { //printing out the index of the value which is against the rules.
+					System.out.println("\nThere is a " + value + " at position " + "(" + i + ", " + j + ")");
 					return false;
+				}
 			}
 		}
 		return true;
@@ -141,10 +142,10 @@ public class Sudoku02 {
 	}
 
 	public static void main(String[] args) {
-		int[][] grid = { { 9, 4, 0, 1, 0, 2, 0, 5, 8 }, { 6, 0, 0, 0, 5, 0, 0, 0, 4 }, { 0, 0, 2, 4, 0, 3, 1, 0, 0 },
-				{ 0, 2, 0, 0, 0, 0, 0, 6, 0 }, { 5, 0, 8, 0, 2, 0, 4, 0, 1 }, { 0, 6, 0, 0, 0, 0, 0, 8, 0 },
-				{ 0, 0, 1, 6, 0, 8, 7, 0, 0 }, { 7, 0, 0, 0, 4, 0, 0, 0, 3 }, { 4, 3, 0, 5, 0, 9, 0, 1, 2 } };
-
+//		int[][] grid = { { 9, 4, 0, 1, 0, 2, 0, 5, 8 }, { 6, 0, 0, 0, 5, 0, 0, 0, 4 }, { 0, 0, 2, 4, 0, 3, 1, 0, 0 },
+//				{ 0, 2, 0, 0, 0, 0, 0, 6, 0 }, { 5, 0, 8, 0, 2, 0, 4, 0, 1 }, { 0, 6, 0, 0, 0, 0, 0, 8, 0 },
+//				{ 0, 0, 1, 6, 0, 8, 7, 0, 0 }, { 7, 0, 0, 0, 4, 0, 0, 0, 3 }, { 4, 3, 0, 5, 0, 9, 0, 1, 2 } };
+		int[][] grid = parseArgs(args);
 		boolean flag = true;
 		while (flag) {
 			printMenu();
