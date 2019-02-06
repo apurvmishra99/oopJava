@@ -90,7 +90,7 @@ public class Sudoku02 {
 		int row = requestInt("Row number of field to change", 0, 8);
 		int column = requestInt("Column number of field to change", 0, 8);
 		int value = requestInt("Enter the value you wish to assign", 0, 9);
-		if (isValid(row, column, value, mat)) {
+		if (isValid(row, column, value, mat)) { //check if your value can be assigned to the given position
 			mat[row][column] = value;
 		} else {
 			System.err.println("\nValue not allowed");
@@ -105,7 +105,7 @@ public class Sudoku02 {
 
 	public static boolean checkRow(int x, int y, int value, int[][] mat) {
 		for (int j = 0; j < 9; j++) {
-			if (value == mat[x][j]) {////printing out the index of the value which is against the rules.
+			if (value == mat[x][j]) {//printing out the index of the value which is against the rules.
 				System.out.println("\nThere is a " + value + " at position " + "(" + x + ", " + j + ")");
 				return false;
 			}
@@ -115,7 +115,7 @@ public class Sudoku02 {
 
 	public static boolean checkColumn(int x, int y, int value, int[][] mat) {
 		for (int i = 0; i < 9; i++) {
-			if (value == mat[i][y]) {////printing out the index of the value which is against the rules.
+			if (value == mat[i][y]) {//printing out the index of the value which is against the rules.
 				System.out.println("\nThere is a " + value + " at position " + "(" + i + ", " + y + ")");
 				return false;
 			}
@@ -124,10 +124,11 @@ public class Sudoku02 {
 	}
 
 	public static boolean checkSubGrid(int x, int y, int value, int[][] mat) {
-		// Dividing subgrids from 0 to 8
-		int subGridNumber = x / 3;
-		for (int i = subGridNumber * 3; i < (subGridNumber * 3 + 3); i++) {
-			for (int j = subGridNumber * 3; j < (subGridNumber * 3 + 3); j++) {
+		// Dividing subgrids into subgrid X and Y
+		int subGridX = x / 3;
+		int subGridY = y / 3;
+		for (int i = subGridX * 3; i < (subGridX * 3 + 3); i++) {
+			for (int j = subGridY * 3; j < (subGridY * 3 + 3); j++) {
 				if (value == mat[i][j]) { //printing out the index of the value which is against the rules.
 					System.out.println("\nThere is a " + value + " at position " + "(" + i + ", " + j + ")");
 					return false;
@@ -137,7 +138,7 @@ public class Sudoku02 {
 		return true;
 	}
 
-	public static boolean isValid(int x, int y, int value, int[][] mat) {
+	public static boolean isValid(int x, int y, int value, int[][] mat) { //check if the value is legal at the given position.
 		return checkRow(x, y, value, mat) && checkColumn(x, y, value, mat) && checkSubGrid(x, y, value, mat);
 	}
 
