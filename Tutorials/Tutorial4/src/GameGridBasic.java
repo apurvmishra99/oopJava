@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.util.Objects;
 
-public class Sudoku02 {
+public class GameGrid {
 	// set the value for the sudoku grid from the arguments given when running the program.
 	public static int[][] parseArgs(String[] args) {
 		int[][] grid = new int[9][9];
@@ -125,10 +125,10 @@ public class Sudoku02 {
 
 	public static boolean checkSubGrid(int x, int y, int value, int[][] mat) {
 		// Dividing subgrids into subgrid X and Y
-		int subGridX = x / 3;
-		int subGridY = y / 3;
-		for (int i = subGridX * 3; i < (subGridX * 3 + 3); i++) {
-			for (int j = subGridY * 3; j < (subGridY * 3 + 3); j++) {
+		int subGridX = 3* (x / 3);
+		int subGridY = 3* (y / 3);
+		for (int i = subGridX; i < (subGridX + 3); i++) {
+			for (int j = subGridY; j < (subGridY + 3); j++) {
 				if (value == mat[i][j]) { //printing out the index of the value which is against the rules.
 					System.out.println("\nThere is a " + value + " at position " + "(" + i + ", " + j + ")");
 					return false;
