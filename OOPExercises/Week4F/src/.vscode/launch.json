@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Has271",
+            "request": "launch",
+            "mainClass": "Has271",
+            "projectName": "src_e890245c"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - DateFashion",
+            "request": "launch",
+            "mainClass": "DateFashion"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ArrayFont9",
+            "request": "launch",
+            "mainClass": "ArrayFont9"
+        }
+    ]
+}
