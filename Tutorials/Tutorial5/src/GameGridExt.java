@@ -1,10 +1,11 @@
 import java.util.Objects;
+import java.util.ArrayList;
 
 /**
  * Encapsulates Sudoku grid data and provides functionality to 
  * access and modify it.
  */
-public class GameGrid {
+public class GameGridExt {
 
     // Constants for coordinate boundaries and Sudoku numbers
     public static final int GRID_DIM = 9;
@@ -14,13 +15,13 @@ public class GameGrid {
     public static final int EMPTY_VAL = 0;
 
     /** Sudoku grid data */
-    private final Field[][] grid;
+    private final ArrayList<ArrayList<Field>> grid;
 
     /**
      * Create a new GameGrid with data based on the given array.
      * @param grid Sudoku game data. 
      */
-    public GameGrid(int[][] grid) {
+    public GameGridExt(int[][] grid) {
         Objects.requireNonNull(grid);
         this.grid = initialiseGrid(grid);
     }
@@ -29,7 +30,7 @@ public class GameGrid {
      * Create a new GameGrid with data based on the content of the provided file.
      * @param gridFile path to a file containing Sudoku grid data
      */
-    public GameGrid(String gridFile) {
+    public GameGridExt(String gridFile) {
         this(IOUtils.loadFromFile(gridFile));
     }
 
@@ -37,18 +38,19 @@ public class GameGrid {
      * Create a Sudoku by creating a deep copy of the given one.
      * @param cpy Game grid data to be copied
      */
-    public GameGrid(GameGrid cpy) {
+    public GameGridExt(GameGridExt cpy) {
         Objects.requireNonNull(cpy);
 
-        grid = new Field[GRID_DIM][GRID_DIM];
+        grid = new ArrayList<>(GRID_DIM);
 
         for(int row = 0; row < GRID_DIM; row++) {
+            grid.add(new ArrayList<>(GRID_DIM));
             for(int column = 0; column < GRID_DIM; column++) {
                 // get value and initial flag from grid to be copied
-                grid[row][column] = new Field(
-                        cpy.grid[row][column].getValue(), 
-                        cpy.grid[row][column].isInitial()
-                        );
+                grid.get(row).add(new Field(
+                        cpy.grid.get(row).get(column).getValue(), 
+                        cpy.grid.get(row).get(column).isInitial()
+                        ));
             }
         }
     }
@@ -58,14 +60,16 @@ public class GameGrid {
      *
      * @param gridData Sudoku grid data to be used for initialisation
      */
-    private Field[][] initialiseGrid(int[][] gridData) {
-        Field[][] result = new Field[GRID_DIM][GRID_DIM];
+    private ArrayList<ArrayList<Field>> initialiseGrid(int[][] gridData) {
+        ArrayList<ArrayList<Field>> result = new ArrayList<>(GRID_DIM);
+
         for(int row = 0; row < gridData.length; row++) {
+            result.add(new ArrayList<>(GRID_DIM));
             for(int column = 0; column < gridData[row].length; column++) {
                 int value = gridData[row][column];
-                if (value == EMPTY_VAL) result[row][column] = new Field();
+                if (value == EMPTY_VAL) result.get(row).add(new Field());
                 // during initialisation all grid values are initial values
-                else result[row][column] = new Field(value, true);             
+                else result.get(row).add(new Field(value, true));             
             }
         }
 
@@ -82,7 +86,7 @@ public class GameGrid {
     public boolean isInitial(int column, int row) {
         if (column < 0 || column >= GRID_DIM || row < 0 || row >= GRID_DIM)
             throw new IllegalArgumentException("Given dimensions invalid: " + column + "x" + row);
-        return grid[row][column].isInitial();
+        return grid.get(row).get(column).isInitial();
     }
 
     /**
@@ -94,7 +98,7 @@ public class GameGrid {
     public int getField(int column, int row) {
         if (column < 0 || column >= GRID_DIM || row < 0 || row >= GRID_DIM)
             throw new IllegalArgumentException("Given dimensions invalid: " + column + "x" + row);
-        return grid[row][column].getValue();
+        return grid.get(row).get(column).getValue();
     }
 
     /**
@@ -116,7 +120,7 @@ public class GameGrid {
             throw new IllegalArgumentException("Given value invalid: " + value);
 
         if(!isInitial(column, row) && isValid(column,row,value)) {
-            grid[row][column].setValue(value);
+            grid.get(row).get(column).setValue(value);
             return true;
         }
 
@@ -132,7 +136,7 @@ public class GameGrid {
         if (column < 0 || column >= GRID_DIM || row < 0 || row >= GRID_DIM)
             throw new IllegalArgumentException("Given dimensions invalid: " + column + "x" + row);
 
-        grid[row][column].setValue(EMPTY_VAL);
+        grid.get(row).get(column).setValue(EMPTY_VAL);
     }
 
     /**
@@ -162,7 +166,7 @@ public class GameGrid {
     private boolean checkRow(int column, int row, int value) {
         boolean result = true;        
         for(int colIdx = 0; colIdx < GRID_DIM; colIdx++) {
-            if (colIdx != column && grid[row][colIdx].getValue() == value) {
+            if (colIdx != column && grid.get(row).get(colIdx).getValue() == value) {
                 result = false;
                 break;
             }
@@ -182,7 +186,7 @@ public class GameGrid {
     private boolean checkColumn(int column, int row, int value) {
         boolean result = true;        
         for(int rowIdx = 0; rowIdx < GRID_DIM; rowIdx++) {
-            if (rowIdx != row && grid[rowIdx][column].getValue() == value) {
+            if (rowIdx != row && grid.get(rowIdx).get(column).getValue() == value) {
                 result = false;
                 break;
             }
@@ -207,7 +211,7 @@ public class GameGrid {
         boolean result = true;
         for(int colIdx = column_start; colIdx < column_start + SUBGRID_DIM; colIdx++) {
             for(int rowIdx = row_start; rowIdx < row_start + SUBGRID_DIM; rowIdx++) {
-                if (colIdx != column && rowIdx != row && grid[rowIdx][colIdx].getValue() == value) {
+                if (colIdx != column && rowIdx != row && grid.get(rowIdx).get(colIdx).getValue() == value) {
                     result = false;
                     break;
                 }
@@ -225,7 +229,7 @@ public class GameGrid {
         
         for (int row = 0; row < GRID_DIM; row++) {
             for(int column = 0; column < GRID_DIM; column++) {
-                result += grid[row][column].toString();
+                result += grid.get(row).get(column).toString();
                 if(column % SUBGRID_DIM == 2) result += " ";
                 result += " ";
             }

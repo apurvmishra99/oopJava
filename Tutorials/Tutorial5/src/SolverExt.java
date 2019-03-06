@@ -3,7 +3,7 @@ import java.util.Objects;
 /**
  * Functionality to solve a given Sudoku game. 
  */
-public class Solver {
+public class SolverExt {
 
     /** 
      * Solve the given Sudoku game using backtracking.
@@ -80,5 +80,35 @@ public class Solver {
         }
 
         return success;
+    }
+
+
+    /** 
+     * Solve the given Sudoku game using backtracking and a recursive approach.
+     *
+     * @param game The game to be solved.
+     * @return true if a solution was found, false otherwise.
+     */
+    public static boolean solveRecursive(GameGrid game) {
+
+        for(int row = 0; row < GameGrid.GRID_DIM; row++) {
+            for(int column = 0; column < GameGrid.GRID_DIM; column++) {
+                if(game.getField(column, row) == GameGrid.EMPTY_VAL) {
+                    
+                    for(int number = GameGrid.MIN_VAL; number <= GameGrid.MAX_VAL; number++) {
+
+                        if (game.setField(column, row, number)) {
+                            if(solveRecursive(game)) return true;
+                            else game.clearField(column, row);
+                        }
+                    }
+
+                    // none of the numbers worked in this field
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
